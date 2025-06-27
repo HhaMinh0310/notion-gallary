@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Gallery tự động</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; }
+    .slider img { max-width: 80%; margin: 10px auto; display: none; }
+    .slider img.active { display: block; }
+    .btn { padding: 10px 20px; margin: 10px; cursor: pointer; background: #333; color: #fff; border: none; }
+  </style>
+</head>
+<body>
+  <h2>Gallery ảnh tự động</h2>
+  <div class="slider" id="slider"></div>
+  <button class="btn" onclick="prevImage()">← Trước</button>
+  <button class="btn" onclick="nextImage()">Tiếp →</button>
+
+  <script>
+    const imageList = [
+      "img1.jpg",
+      "img2.png",
+      "img3.jpeg"
+      // Bạn chỉ cần thêm tên file ảnh ở đây nếu không có backend
+    ];
+
+    const slider = document.getElementById("slider");
+    let current = 0;
+
+    imageList.forEach((src, index) => {
+      const img = document.createElement("img");
+      img.src = src;
+      if (index === 0) img.classList.add("active");
+      slider.appendChild(img);
+    });
+
+    function showImage(index) {
+      const images = slider.querySelectorAll("img");
+      images.forEach(img => img.classList.remove("active"));
+      images[index].classList.add("active");
+    }
+
+    function nextImage() {
+      current = (current + 1) % imageList.length;
+      showImage(current);
+    }
+
+    function prevImage() {
+      current = (current - 1 + imageList.length) % imageList.length;
+      showImage(current);
+    }
+  </script>
+</body>
+</html>
